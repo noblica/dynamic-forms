@@ -26,7 +26,7 @@ export class DynamicFormComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        this.form = this.qcs.toFormGroup(this.questions || []);
+        this.form = this.qcs.toFormGroup(this.questions);
     }
 
     // ngOnInit() {

@@ -13,10 +13,11 @@ export class QuestionService {
     getQuestions() {
 
         return this.http
-            .get('http://localhost:3000/questions')
-            .map(result => {
-                return Array(result).map(question => new TextboxQuestion(question));
-            });
+            .get<any[]>('http://localhost:3000/questions')
+            .map(result => result.map(question => new TextboxQuestion(question)));
+            // .map(result => {
+            //     return Array(result).map(question => new TextboxQuestion(question));
+            // });
 
         // const questions: QuestionBase<any>[] = [
         //

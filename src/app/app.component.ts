@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import {
+    Component,
+    OnInit
+} from '@angular/core';
 import { QuestionService } from './question.service';
 import { Observable } from 'rxjs/Observable';
-
+import 'rxjs/add/operator/startWith';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +12,12 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./app.component.css'],
     providers: [QuestionService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   questions: Observable<any[]>;
 
-  constructor(service: QuestionService) {
-      this.questions = service.getQuestions();
+  constructor(private service: QuestionService) { }
+
+  ngOnInit() {
+      this.questions = this.service.getQuestions().startWith([]);
   }
 }
