@@ -1,0 +1,17 @@
+{
+  "questions": [
+    {
+      "key": "firstName",
+      "label": "First Name",
+      "value": "Bombasto",
+      "required": true,
+      "order": 1
+    },
+    {
+      "key": "emailAddress",
+      "label": "Email",
+      "type": "email",
+      "order": 2
+    }
+  ]
+}

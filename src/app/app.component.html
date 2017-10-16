@@ -1,4 +1,6 @@
 <div>
     <h2>Job Application for Heroes</h2>
-    <app-dynamic-form [questions]="questions"></app-dynamic-form>
+    {{questions | async | json}}
+    <app-dynamic-form *ngIf="questions"
+                      [questions]="questions | async"></app-dynamic-form>
 </div>

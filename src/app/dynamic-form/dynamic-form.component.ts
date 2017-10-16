@@ -1,7 +1,8 @@
 import {
     Component,
     Input,
-    OnInit
+    OnInit,
+    OnChanges
 } from '@angular/core';
 import {
     FormGroup
@@ -15,16 +16,22 @@ import { QuestionControlService } from './question-control.service';
     templateUrl: './dynamic-form.component.html',
     providers: [ QuestionControlService ]
 })
-export class DynamicFormComponent implements OnInit{
-    @Input() questions: QuestionBase<any>[] = [];
+export class DynamicFormComponent implements OnChanges {
+    @Input() questions;
     form: FormGroup;
     payLoad = '';
 
-    constructor(private qcs: QuestionControlService) { }
-
-    ngOnInit() {
-        this.form = this.qcs.toFormGroup(this.questions);
+    constructor(private qcs: QuestionControlService) {
+        this.questions = [];
     }
+
+    ngOnChanges() {
+        this.form = this.qcs.toFormGroup(this.questions || []);
+    }
+
+    // ngOnInit() {
+    //     this.questions = [];
+    // }
 
     onSubmit() {
         this.payLoad = JSON.stringify(this.form.value);

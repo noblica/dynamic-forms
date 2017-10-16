@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import {QuestionService} from './question.service';
+import { QuestionService } from './question.service';
+import { Observable } from 'rxjs/Observable';
+
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,7 @@ import {QuestionService} from './question.service';
     providers: [QuestionService]
 })
 export class AppComponent {
-  questions: any[];
+  questions: Observable<any[]>;
 
   constructor(service: QuestionService) {
       this.questions = service.getQuestions();
