@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
   constructor(private service: QuestionService) { }
 
   ngOnInit() {
-      this.questions = this.service.getQuestions().startWith([]);
+      this.questions = this.service
+          .getQuestions()
+          .startWith([]);
   }
 }
