@@ -16,6 +16,15 @@ export class QuestionService {
             .filter(key => key !== 'id');
     }
 
+    static assignValueToField(fieldConfig, resultKeys, result) {
+        const keyHasValue = resultKeys.indexOf(fieldConfig.key) !== -1;
+
+        if (keyHasValue) {
+            fieldConfig.value = result[fieldConfig.key];
+        }
+        return fieldConfig;
+    }
+
     getQuestions() {
 
         const formConfig = [...questions];
@@ -25,14 +34,8 @@ export class QuestionService {
             .map(result => {
                 const resultKeys = QuestionService.getKeysWithoutId(result);
 
-                return formConfig.map(fieldConfig => {
-                    const keyHasValue = resultKeys.indexOf(fieldConfig.key) !== -1;
-
-                    if (keyHasValue) {
-                        fieldConfig.value = result[fieldConfig.key];
-                    }
-                    return fieldConfig;
-                });
+                return formConfig.map(fieldConfig =>
+                    QuestionService.assignValueToField(fieldConfig, resultKeys, result));
             })
             .map(result => result.map(question => {
                     switch (question.controlType) {
