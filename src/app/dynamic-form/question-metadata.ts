@@ -15,7 +15,6 @@ export const questions = [
     {
         key: 'firstName',
         label: 'First Name',
-        value: 'Bombasto',
         required: true,
         order: 1,
         controlType: 'textbox'
