@@ -11,33 +11,32 @@ import { questions } from './dynamic-form/question-metadata';
 export class QuestionService {
     constructor(private http: HttpClient) {}
 
-    getObjectWithKey(array, key) {
-        return array
-            .find(field => field.key === key);
-    }
-
-    mapValueToKey(key, value, formFieldArray) {
-        const correspondingField = this.getObjectWithKey(formFieldArray, key);
-        correspondingField.value = value;
-        return correspondingField;
+    static getKeysWithoutId(array) {
+        return Object.keys(array)
+            .filter(key => key !== 'id');
     }
 
     getQuestions() {
 
-        const formFieldArray = [...questions];
+        const formConfig = [...questions];
 
         return this.http
             .get<any[]>('http://localhost:3000/questions/0')
             .map(result => {
-                const resultKeys = Object.keys(result)
-                    .filter(key => key !== 'id');
+                const resultKeys = QuestionService.getKeysWithoutId(result);
 
-                return resultKeys.map(key =>
-                    this.mapValueToKey(key, result[key], formFieldArray));
+                return formConfig.map(fieldConfig => {
+                    const keyHasValue = resultKeys.indexOf(fieldConfig.key) !== -1;
+
+                    if (keyHasValue) {
+                        fieldConfig.value = result[fieldConfig.key];
+                    }
+                    return fieldConfig;
+                });
             })
             .map(result => result.map(question => {
                     switch (question.controlType) {
-                        case 'text':
+                        case 'textbox':
                             return new TextboxQuestion(question);
                         case 'dropdown':
                             return new DropdownQuestion(question);

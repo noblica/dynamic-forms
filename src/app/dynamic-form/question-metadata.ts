@@ -18,7 +18,7 @@ export const questions = [
         value: 'Bombasto',
         required: true,
         order: 1,
-        controlType: 'text'
+        controlType: 'textbox'
     },
     {
         key: 'emailAddress',
@@ -26,6 +26,6 @@ export const questions = [
         type: 'email',
         order: 2,
         value: '',
-        controlType: 'text'
+        controlType: 'textbox'
     }
 ];
